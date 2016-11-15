@@ -5,7 +5,7 @@ source $HOME/root/env/c++/hdt
 url_prefix='http://downloads.dbpedia.org/2015-04/'
 url_prefix_path='http://downloads.dbpedia.org/2015-04/core-i18n/en/'
 base_files="dbpedia_2015-04.nt"
-extra_files="instance-types_en.nt mappingbased-properties_en.nt labels_en.nt short-abstracts_en.nt article-categories_en.nt category-labels_en.nt skos-categories_en.nt redirects_en.nt"
+extra_files="instance-types_en.nt mappingbased-properties_en.nt labels_en.nt short-abstracts_en.nt article-categories_en.nt category-labels_en.nt skos-categories_en.nt redirects_en.nt persondata_en.nt.bz2"
 compression='bz2'
 output_dir='output'
 output_file='dbpedia'
