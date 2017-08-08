@@ -1,17 +1,22 @@
 #!/bin/bash
 
-url_prefix='http://downloads.dbpedia.org/2015-04/'
-url_prefix_path='http://downloads.dbpedia.org/2015-04/core-i18n/en/'
-files="dbpedia_2015-04.nt instance-types_en.nt mappingbased-properties_en.nt labels_en.nt short-abstracts_en.nt article-categories_en.nt category-labels_en.nt skos-categories_en redirects_en.nt"
+ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+dataset="dbpedia2015-04"
 compression='bz2'
+source "${ABSOLUTE_PATH}/${dataset}"
+
+output="./${dataset}-out"
+if [ ! -d $output ]; then
+  mkdir -p $output
+fi
 
 for file in $files 
 do
-	if [ ! -f "$file" ]; then
-		if [ ! -f "$file.$compression" ]; then
-			curl -C - -O "$url_prefix_path$file.$compression"
+	if [ ! -f "${output}/${file}" ]; then
+		if [ ! -f "${output}/${file}.${compression}" ]; then
+			curl -o "${output}/${file}.${compression}"  -O "${url_prefix_path}/${file}.${compression}"
 		fi
-		bunzip2 "$file.$compression"
+		bunzip2 "${output}/${file}.${compression}"
 	fi
 done
 
