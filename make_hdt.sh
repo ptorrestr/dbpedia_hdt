@@ -1,8 +1,7 @@
 #!/bin/bash
 
 ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-dataset="dbpedia2015-04"
-compression='bz2'
+dataset="dbpedia2014"
 source "${ABSOLUTE_PATH}/${dataset}"
 
 output="./${dataset}-out"
@@ -14,7 +13,8 @@ for file in $files
 do
 	if [ ! -f "${output}/${file}" ]; then
 		if [ ! -f "${output}/${file}.${compression}" ]; then
-			curl -o "${output}/${file}.${compression}"  -O "${url_prefix_path}/${file}.${compression}"
+      echo "Getting: ${url_prefix_path}/${file}.${compression}"
+			curl -o "${output}/${file}.${compression}"  -O "${url_prefix_path}/${file}.${compression}" --progress-bar
 		fi
 		bunzip2 "${output}/${file}.${compression}"
 	fi
