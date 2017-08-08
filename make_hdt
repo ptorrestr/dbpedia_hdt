@@ -11,6 +11,7 @@ fi
 
 ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${1}"
+source $ROOT/env/c++/hdt
 
 output_dir="${2}"
 output_file="${dataset}"
@@ -44,7 +45,7 @@ do
 done
 
 # use hdt
-if [ ! -f "$output_dir/$output_file.hdt" ]; then
+if [ -f "$output_dir/$output_file.hdt" ]; then
   echo "Removing previous hdt output file"
   rm "$output_dir/$output_file.hdt"
 fi
