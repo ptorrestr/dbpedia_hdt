@@ -1,11 +1,19 @@
 #!/bin/bash
 
-ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-dataset="dbpedia2014"
-source "${ABSOLUTE_PATH}/${dataset}"
+#$1 dbpedia 
+#$2 output folder
 
-output_dir="./${dataset}-out"
-output_file='dbpedia'
+if [ "$#" -ne 2 ]; then
+  echo "Illegal number of parameters"
+  echo "Usage: make_hdt [dbpedia] [output-folder]"
+  exit 1
+fi
+
+ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${1}"
+
+output_dir="${2}"
+output_file="${dataset}"
 if [ ! -d $output_dir ]; then
   echo "Creating $output_dir folder"
   mkdir -p $output_dir
