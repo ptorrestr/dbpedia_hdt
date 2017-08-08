@@ -2,5 +2,6 @@
 
 url_prefix='http://downloads.dbpedia.org/2014'
 url_prefix_path="${url_prefix}/en"
-files="instance_types_en.nt mappingbased_properties_en.nt labels_en.nt short_abstracts_en.nt article_categories_en.nt category_labels_en.nt skos_categories_en redirects_en.nt"
+files="instance_types_en.nt"
+#files="instance_types_en.nt mappingbased_properties_en.nt labels_en.nt short_abstracts_en.nt article_categories_en.nt category_labels_en.nt skos_categories_en redirects_en.nt"
 compression='bz2'
