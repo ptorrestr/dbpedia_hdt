@@ -14,7 +14,7 @@ source "${1}"
 source $ROOT/env/c++/hdt
 
 output_dir="${2}"
-output_file="${dataset}"
+output_file="${name}"
 if [ ! -d $output_dir ]; then
   echo "Creating $output_dir folder"
   mkdir -p $output_dir
@@ -22,26 +22,40 @@ fi
 
 for file in $files 
 do
-  if [ ! -f "$output_dir/$file" ]; then
-    if [ ! -f "$output_dir/$file.$compression" ]; then
-      echo "Getting: ${url_prefix_path}/${file}.${compression}"
-      curl -o "${output_dir}/${file}.${compression}"  -O "${url_prefix_path}/${file}.${compression}" --progress-bar
+  if [ ! -f "$output_dir/${file}_${language}.${format}" ]; then
+    if [ ! -f "$output_dir/${file}_${language}.${format}.$compression" ]; then
+      echo "Getting: ${url_prefix_path}/${file}_${language}.${format}.${compression}"
+      curl -o "${output_dir}/${file}_${language}.${format}.${compression}"  -O "${url_prefix_path}/${file}_${language}.${format}.${compression}" --progress-bar
     fi
-    bunzip2 "$output_dir/$file.$compression"
+    echo "Unzipping $file"
+    bunzip2 "${output_dir}/${file}_${language}.${format}.$compression"
+  fi
+done
+
+# Get additional files
+for file in $additional_files
+do
+  if [ ! -f "$output_dir/$file" ]; then
+    echo "Getting: ${url_prefix}/${file}"
+    curl -o ${output_dir}/${file} -O ${url_prefix}/${file} --progress-bar
   fi
 done
 
 # Join into one file
-if [ -f "$output_dir/$output_file.nt" ]; then
+if [ -f "$output_dir/$output_file.${format}" ]; then
   echo "Removing previous output file"
-  rm "$output_dir/$output_file.nt"
+  rm "$output_dir/$output_file.${format}"
 fi
-
 echo "Merging files"
 for file in $files
 do
-  echo "$file"
-  cat $output_dir/$file >> $output_dir/$output_file".nt"
+  echo "${file}_${language}.${format}"
+  cat $output_dir/${file}_${language}.${format} >> $output_dir/$output_file.${format}
+done
+for file in $additional_files
+do
+  echo $file
+  cat $output_dir/$file >> $output_dir/$output_file.${format}
 done
 
 # use hdt
@@ -52,4 +66,4 @@ fi
 
 echo "Transforming into hdt"
 
-rdf2hdt -i -f ntriples "$output_dir/$output_file.nt" "$output_dir/$output_file.hdt"
+rdf2hdt -i -f ntriples "$output_dir/$output_file.${format}" "$output_dir/$output_file.hdt"
