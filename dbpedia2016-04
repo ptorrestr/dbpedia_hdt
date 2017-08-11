@@ -1,4 +1,4 @@
-#/bin/bash
+#!/usr/bin/env bash
 
 dataset="dbpedia"
 version="2016-04"
@@ -6,7 +6,19 @@ name="${dataset}_${version}"
 language="en"
 url_prefix="http://downloads.dbpedia.org/${version}"
 url_prefix_path="${url_prefix}/core-i18n/${language}"
-files="instance_types mappingbased_literals mappingbased_objects geo_coordinates_mappingbased labels short_abstracts article_categories category_labels skos_categories redirects"
+files="
+	instance_types
+	mappingbased_literals
+	mappingbased_objects
+	geo_coordinates_mappingbased
+	labels
+	short_abstracts
+	article_categories
+	category_labels
+	skos_categories
+	redirects
+	disambiguations
+"
 format="ttl"
 compression="bz2"
 additional_files="dbpedia_2016-04.nt"

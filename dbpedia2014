@@ -1,7 +1,21 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-dataset="dbpedia2014"
-url_prefix='http://downloads.dbpedia.org/2014'
-url_prefix_path="${url_prefix}/en"
-files="instance_types_en.nt mappingbased_properties_en.nt labels_en.nt short_abstracts_en.nt article_categories_en.nt category_labels_en.nt skos_categories_en.nt redirects_en.nt"
-compression='bz2'
+dataset="dbpedia"
+version="2014"
+name="${dataset}_${version}"
+language="en"
+url_prefix="http://downloads.dbpedia.org/${version}"
+url_prefix_path="${url_prefix}/${language}"
+files=\
+	instance_types \
+	mappingbased_properties \
+	labels \
+	short_abstracts \
+	article_categories \
+	category_label \
+	skos_categories \
+	redirects \
+	disambiguations
+format="nt"
+compression="bz2"
+additional_files="dbpedia_2014.owl"
