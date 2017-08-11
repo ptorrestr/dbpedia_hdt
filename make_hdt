@@ -67,3 +67,6 @@ fi
 echo "Transforming into hdt"
 
 rdf2hdt -i -f ntriples "$output_dir/$output_file.${format}" "$output_dir/$output_file.hdt"
+
+echo "Force Index Creation"
+hdtSearch -q "a" "$output_dir/$output_file.hdt"
