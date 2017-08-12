@@ -13,6 +13,7 @@ ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${1}"
 source $ROOT/env/c++/hdt
 source $ROOT/env/c++/parallel
+source $ROOT/env/java/rdf2rdf
 
 max_processes=4
 output_dir="${2}"
@@ -48,10 +49,13 @@ if [ ! -f "$output_dir/$output_file.${format}" ]; then
   echo "Adding additional files"
   for file in $additional_files
   do
-    echo $file
-    tool=cat
-    if file --mime-type $file | grep -q gzip$; then tool=bzcat; fi
-    $tool $output_dir/$file >> $output_dir/$output_file.${format}
+    echo "Checking format of $file"
+    if file --mime-type $file | grep -q gzip$; then bunzip $output_dir/$file; file="${file%.*}"; fi
+    extension="${file##*.}"
+    if [ "$extesnion" != "$format" ]; then
+      rdf2rdf $output_dir/$file $output_dir/$file.${format}
+    fi
+    cat $output_dir/$file.${format} >> $output_dir/$output_file.${format}
   done
 fi
 
