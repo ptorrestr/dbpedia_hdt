@@ -24,14 +24,10 @@ fi
 
 for file in $files 
 do
-  #if [ ! -f "$output_dir/${file}_${language}.${format}" ]; then
-    if [ ! -f "$output_dir/${file}_${language}.${format}.$compression" ]; then
-      echo "Getting: ${url_prefix_path}/${file}_${language}.${format}.${compression}"
-      curl -o "${output_dir}/${file}_${language}.${format}.${compression}"  -O "${url_prefix_path}/${file}_${language}.${format}.${compression}" --progress-bar
-    fi
-    #echo "Unzipping $file"
-    #bunzip2 "${output_dir}/${file}_${language}.${format}.$compression"
-  #fi
+  if [ ! -f "$output_dir/${file}_${language}.${format}.$compression" ]; then
+    echo "Getting: ${url_prefix_path}/${file}_${language}.${format}.${compression}"
+    curl -o "${output_dir}/${file}_${language}.${format}.${compression}"  -O "${url_prefix_path}/${file}_${language}.${format}.${compression}" --progress-bar
+  fi
 done
 
 # Get additional files
@@ -49,11 +45,6 @@ if [ ! -f "$output_dir/$output_file.${format}" ]; then
   parallel --bar -j ${max_processes} bzcat ${output_dir}/{1}_${language}.${format}.${compression} \
 	 ::: ${files} \
 	 > ${output_dir}/${output_file}.${format}
-  #for file in $files
-  #do
-  ##  echo "${file}_${language}.${format}"
-  #  bzcat $output_dir/${file}_${language}.${format}.${compression} >> $output_dir/$output_file.${format}
-  #done
   echo "Adding additional files"
   for file in $additional_files
   do
