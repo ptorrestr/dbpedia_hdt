@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+dataset="dbpedia"
+version="2016-04"
+name="${dataset}_${version}"
+language="en"
+url_prefix="http://downloads.dbpedia.org/${version}"
+url_prefix_path="${url_prefix}/core-i18n/${language}"
+files="
+	disambiguations
+	redirects
+"
+format="ttl"
+compression="bz2"
+additional_files="dbpedia_2016-04.nt"
