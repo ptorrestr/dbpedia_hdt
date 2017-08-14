@@ -17,7 +17,7 @@ source $ROOT/env/java/rdf2rdf
 
 max_processes=4
 output_dir="${2}"
-output_file="${name}"
+output_file="${name}_out"
 if [ ! -d $output_dir ]; then
   echo "Creating $output_dir folder"
   mkdir -p $output_dir
@@ -65,8 +65,21 @@ if [ -f "$output_dir/$output_file.hdt" ]; then
   rm "$output_dir/$output_file.hdt"
 fi
 
-echo "Transforming into hdt"
-rdf2hdt -f ntriples "$output_dir/${output_file}.${format}" "$output_dir/${output_file}.hdt"
+case ${format} in
+  nt)
+    format_name="ntriples"
+  ;;
+  ttl)
+    format_name="turtle"
+  ;;
+  *)
+    echo "Unkown format: ${format}"
+    exit 1
+  ;;
+esac
+
+echo "Transforming into hdt from $output_dir/${output_file}.${format} to $output_dir/${output_file}.hdt"
+rdf2hdt -f ${format_name} "$output_dir/${output_file}.${format}" "$output_dir/${output_file}.hdt"
 
 echo "Force Index Creation"
 hdtSearch -q "a" "$output_dir/$output_file.hdt"
