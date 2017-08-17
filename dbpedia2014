@@ -12,11 +12,12 @@ files="
 	labels
 	short_abstracts
 	article_categories
-	category_label
+	category_labels
 	skos_categories
 	redirects
 	disambiguations
 "
-format="nt"
+format="ttl"
 compression="bz2"
 additional_files="dbpedia_2014.owl"
+additional_files=""
