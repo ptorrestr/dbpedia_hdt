@@ -11,7 +11,7 @@ fi
 
 ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source $1
-source $ROOT/miniconda3/envs/gcc6/bin/activate
+source $ROOT/miniconda3/bin/activate path_vectors
 source $ROOT/env/c++/parallel
 source $ROOT/env/java/rdf2rdf
 
@@ -79,7 +79,7 @@ case ${format} in
 esac
 
 echo "Transforming into hdt from $output_dir/${output_file}.${format} to $output_dir/${output_file}.hdt"
-rdf2hdt -p -f ${format_name} "$output_dir/${output_file}.${format}" "$output_dir/${output_file}.hdt"
+rdf2hdt -p -f ${format_name} -c "dictionaryliteral.hdtcfg" "$output_dir/${output_file}.${format}" "$output_dir/${output_file}.hdt"
 
 echo "Force Index Creation"
 hdtSearch -q "a" "$output_dir/$output_file.hdt"
