@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+dataset="dbpedia"
+version="2014"
+name="${dataset}_${version}"
+language="en"
+url_prefix="http://downloads.dbpedia.org/${version}"
+url_prefix_path="${url_prefix}/${language}"
+files="
+	skos_categories
+	disambiguations
+"
+format="ttl"
+compression="bz2"
+additional_files="dbpedia_2014.owl"
