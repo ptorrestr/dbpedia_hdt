@@ -3,9 +3,9 @@
 #$1 dbpedia 
 #$2 output folder
 
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 3 ]; then
   echo "Illegal number of parameters"
-  echo "Usage: make_hdt [dbpedia] [output-folder]"
+  echo "Usage: make_hdt [dbpedia] [config] [output-folder]"
   exit 1
 fi
 
@@ -16,7 +16,8 @@ source $ROOT/env/c++/parallel
 source $ROOT/env/java/rdf2rdf
 
 max_processes=4
-output_dir="${2}"
+output_dir="${3}"
+config_file="${2}"
 output_file="${name}_out"
 if [ ! -d $output_dir ]; then
   echo "Creating $output_dir folder"
@@ -79,7 +80,7 @@ case ${format} in
 esac
 
 echo "Transforming into hdt from $output_dir/${output_file}.${format} to $output_dir/${output_file}.hdt"
-rdf2hdt -p -f ${format_name} -c "dictionaryliteral.hdtcfg" "$output_dir/${output_file}.${format}" "$output_dir/${output_file}.hdt"
+rdf2hdt -p -f ${format_name} -c "${config_file}" "$output_dir/${output_file}.${format}" "$output_dir/${output_file}.hdt"
 
 echo "Force Index Creation"
 hdtSearch -q "a" "$output_dir/$output_file.hdt"
